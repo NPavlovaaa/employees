@@ -1,6 +1,6 @@
 const {prisma} = require("../prisma/prisma-client");
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 /**
  * @route POST /api/user/login
@@ -13,7 +13,9 @@ const login = async (req, res) => {
         const password = req.body.password;
 
         if(!email || !password){
-            return res.status(400).json({message: `${password}`})
+            return res.status(400).json({
+                message: 'Заполните все обязательные поля'
+            })
         }
 
         const user = await prisma.user.findFirst({where: {email}});
@@ -50,7 +52,11 @@ const register = async (req, res) => {
         return res.send(400).json({message: 'Заполните все обязательные поля'})
     }
 
-    const registeredUser = await prisma.user.findFirst({where: {email}})
+    const registeredUser = await prisma.user.findFirst({
+        where: {
+            email
+        }
+    })
 
     if (registeredUser){
         return res.status(400).json({message: 'Пользователь с таким email уже существует'})
@@ -81,8 +87,13 @@ const register = async (req, res) => {
     }
 }
 
+/**
+ * @route GET /api/user/current
+ * @desc Получение текущего пользователя
+ * @access Private
+ **/
 const current = async (req, res) => {
-    res.send('current')
+    return res.status(200).json(req.user)
 }
 module.exports = {
     login,
