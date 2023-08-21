@@ -9,8 +9,7 @@ const jwt = require("jsonwebtoken");
  **/
 const login = async (req, res) => {
     try {
-        const email = req.body.email;
-        const password = req.body.password;
+        const {email, password} = req.body;
 
         if(!email || !password){
             return res.status(400).json({
