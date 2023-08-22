@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Form} from "antd";
 
 type Props = {
-    children?: React.ReactNode;
+    children: React.ReactNode;
     type?: "primary" | "link" | "text" | "default" | "dashed" | undefined;
     htmlType?: "button" | "submit" | "reset" | undefined;
     onClick?: () => void;

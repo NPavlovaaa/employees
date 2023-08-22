@@ -6,5 +6,5 @@ export const Paths = {
     employeeEdit: '/employee/edit',
     status: '/status',
     login: '/login',
-    register: 'register'
+    register: '/register'
 } as const;
