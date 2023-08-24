@@ -3,7 +3,7 @@ import {Button, Form} from "antd";
 
 type Props = {
     children: React.ReactNode;
-    type?: "primary" | "link" | "text" | "default" | "dashed" | undefined;
+    type?: "primary" | "link" | "text" | "default" | "dashed" | "ghost" | undefined;
     htmlType?: "button" | "submit" | "reset" | undefined;
     onClick?: () => void;
     danger?: boolean;
