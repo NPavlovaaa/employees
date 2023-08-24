@@ -44,20 +44,19 @@ export const Employees = () => {
 
     return(
         <Layout>
-            <CustomButton type="primary" icon={<PlusCircleOutlined/>}>
+            <CustomButton type="primary" icon={<PlusCircleOutlined/>} onClick={() => navigate(Paths.employeeAdd)}>
                 Добавить
             </CustomButton>
             <Table loading={isLoading}
                    dataSource={data}
                    columns={columns}
-                   rowKey={record => record.id}
+                   rowKey={(record) => record.id}
                    onRow={(record) => {
                        return {
-                           onClick: () => navigate(`${Paths.employee}/${record.id}`)
-                       }
+                           onClick: () => navigate(`${Paths.employee}/${record.id}`),
+                       };
                    }}
             >
-
             </Table>
         </Layout>
     )

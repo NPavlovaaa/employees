@@ -6,11 +6,11 @@ export const employeesAPI = api.injectEndpoints({
     endpoints: (builder) => ({
         getAllEmployees: builder.query<Employee[], void>({
             query: () => ({
-                url: "/employees",
+                url: '/employees',
                 method: "GET",
             }),
         }),
-        getEmployee: builder.query<Employee[], string>({
+        getEmployee: builder.query<Employee, string>({
             query: (id) => ({
                 url: `/employees/${id}`,
                 method: "GET",
