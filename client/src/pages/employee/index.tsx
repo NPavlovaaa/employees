@@ -76,7 +76,7 @@ export const Employee = () => {
                             <CustomButton
                                 shape="round"
                                 type="default"
-                                icon={<EditOutlined />}
+                                icon={<EditOutlined/>}
                             >
                                 Редактировать
                             </CustomButton>
@@ -85,14 +85,14 @@ export const Employee = () => {
                             shape="round"
                             danger
                             onClick={showModal}
-                            icon={<DeleteOutlined />}
+                            icon={<DeleteOutlined/>}
                         >
                             Удалить
                         </CustomButton>
                     </Space>
                 </>
             )}
-            <ErrorMessage message={error} />
+            <ErrorMessage message={error}/>
             <Modal
                 title="Подтвердите удаление"
                 open={isModalOpen}

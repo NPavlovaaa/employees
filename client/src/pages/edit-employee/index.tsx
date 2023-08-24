@@ -3,19 +3,21 @@ import {EmployeeForm} from "../../components/employee-form";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectUser} from "../../features/auth/authSlice";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Employee} from "@prisma/client";
-import {useAddEmployeeMutation} from "../../app/services/employeesAPI";
+import {useEditEmployeeMutation, useGetEmployeeQuery} from "../../app/services/employeesAPI";
 import {isErrorWithMessage} from "../../utils/is-error-with-message";
 import {Layout} from "../../components/layout";
 import {Paths} from "../../paths";
 
 
-export const AddEmployee = () => {
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+export const EditEmployee = () => {
     const user = useSelector(selectUser);
-    const [addEmployee] = useAddEmployeeMutation();
+    const navigate = useNavigate();
+    const params = useParams<{ id: string }>();
+    const [error, setError] = useState("");
+    const { data, isLoading } = useGetEmployeeQuery(params.id || "");
+    const [editEmployee] = useEditEmployeeMutation();
 
     useEffect(() => {
         if(!user){
@@ -23,10 +25,16 @@ export const AddEmployee = () => {
         }
     }, [user, navigate])
 
-    const handleAddEmployee = async (data: Employee) => {
+    if (isLoading) {
+        return <span>Загрузка</span>
+    }
+
+    const handleEditEmployee = async (employee: Employee) => {
         try{
-            await addEmployee(data).unwrap();
-            navigate(`${Paths.status}/created`);
+            const editedEmployee = {...data, ...employee};
+
+            await editEmployee(editedEmployee).unwrap();
+            navigate(`${Paths.status}/updated`);
         } catch (err) {
             const maybeError = isErrorWithMessage(err);
 
@@ -42,10 +50,11 @@ export const AddEmployee = () => {
         <Layout>
             <Row align="middle" justify="center">
                 <EmployeeForm
-                    onFinish={handleAddEmployee}
-                    title="Добавить сотрудника"
-                    btnText="Добавить"
+                    onFinish={handleEditEmployee}
+                    title="Изменить сотрудника"
+                    btnText="Сохранить"
                     error={error}
+                    employee={data}
                 />
             </Row>
         </Layout>
